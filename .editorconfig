@@ -1,8 +1,8 @@
 root = true
 
 [*]
-indent_style = tab
-trim_trailing_whitespace = true
+indent_style = space
+trim_trailing_whitespace = false
 indent_size = 2
 
 [*.js]
@@ -10,4 +10,3 @@ quote_type = single
 
 [*.md]
 max_line_length = off
-trim_trailing_whitespace = false
