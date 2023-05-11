@@ -14,16 +14,25 @@ router.get("/", (req, res) => {
     });
   }
 
-  res.json(messages);
+  res.status(200).json(messages);
 });
 
 router.get("/:messageId", (req, res) => {
   const { messageId } = req.params;
 
-  res.json({
+  res.status(200).json({
     id: messageId,
     name: "Hello World!",
     channels_users_id: "asd4x89xf-sad45s4da6",
+  });
+});
+
+router.post("/", (req, res) => {
+  const { body } = req;
+
+  res.status(201).json({
+    message: "Message created",
+    messageCreated: body,
   });
 });
 

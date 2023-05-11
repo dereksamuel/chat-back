@@ -17,19 +17,28 @@ router.get("/", (req, res) => {
     });
   }
 
-  res.json(users);
+  res.status(200).json(users);
 });
 
 router.get("/:userId", (req, res) => {
   const { userId } = req.params;
 
-  res.json({
+  res.status(200).json({
     id: userId,
     name: "Derek",
     email: "11dereksamuel@gmail.com",
     phone: "3154494547",
     password: "1234",
     bio: "I am a full stack developer",
+  });
+});
+
+router.post("/", (req, res) => {
+  const { body } = req;
+
+  res.status(201).json({
+    message: "User created",
+    user: body,
   });
 });
 

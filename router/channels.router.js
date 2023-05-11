@@ -14,17 +14,26 @@ router.get("/", (req, res) => {
     });
   }
 
-  res.json(channels);
+  res.status(200).json(channels);
 });
 
 
 router.get("/:channelId", (req, res) => {
   const { channelId } = req.params;
 
-  res.json({
+  res.status(200).json({
     id: channelId,
     name: "Platzi",
     description: "Desc and bio",
+  });
+});
+
+router.post("/", (req, res) => {
+  const { body } = req;
+
+  res.status(201).json({
+    message: "Channel created",
+    channel: body,
   });
 });
 
