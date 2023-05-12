@@ -4,28 +4,22 @@ const UsersService = require("../services/users.services");
 const router = express.Router();
 const userService = new UsersService();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await userService.getAll();
     res.status(200).json(users);
   } catch (error) {
-    res.status(400).send({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await userService.getById(userId);
     res.status(200).json(user);
   } catch (error) {
-    res.status(404).send({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 
@@ -36,7 +30,7 @@ router.post("/", async (req, res) => {
   res.status(201).json(newUser);
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { body } = req;
 
@@ -44,24 +38,18 @@ router.patch("/:id", async (req, res) => {
     const updatedUser = await userService.update(id, body);
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(404).send({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   try {
     const idDeleted = await userService.remove(id);
     res.status(200).json(idDeleted);
   } catch (error) {
-    res.status(404).send({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 

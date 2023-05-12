@@ -4,29 +4,23 @@ const MessagesService = require("../services/messages.services");
 const router = express.Router();
 const messagesService = new MessagesService();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const messages = await messagesService.getAll();
     res.status(200).json(messages);
   } catch (error) {
-    res.status(400).send({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 
-router.get("/:messageId", async (req, res) => {
+router.get("/:messageId", async (req, res, next) => {
   const { messageId } = req.params;
 
   try {
     const message = await messagesService.getById(messageId);
     res.status(200).json(message);
   } catch (error) {
-    res.status(404).send({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 
@@ -37,7 +31,7 @@ router.post("/", async (req, res) => {
   res.status(201).json(newMessage);
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { body } = req;
 
@@ -45,24 +39,18 @@ router.patch("/:id", async (req, res) => {
     const updatedMessage = await messagesService.update(id, body);
     res.status(200).json(updatedMessage);
   } catch (error) {
-    res.status(404).json({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   try {
     const deletedId = await messagesService.remove(id);
     res.status(200).json(deletedId);
   } catch (error) {
-    res.status(404).json({
-      status: "error",
-      message: error.message
-    });
+    next(error);
   }
 });
 

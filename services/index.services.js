@@ -1,4 +1,5 @@
 const { faker } = require("@faker-js/faker");
+const boom = require("@hapi/boom");
 
 class Service {
   constructor(data) {
@@ -16,14 +17,14 @@ class Service {
 
   async getById(thingId) {
     const thing = this.things.find(thing => thing.id === thingId);
-    if (!thing) throw new Error("Id: " + thingId + " Not found");
+    if (!thing) throw boom.notFound("Id: " + thingId + " Not found");
 
     return thing;
   }
 
   async update(thingId, thingData) {
     const thingIndex = this.things.findIndex(thing => thing.id === thingId);
-    if (thingIndex === -1) throw new Error("Id: " + thingId + " Not found");
+    if (thingIndex === -1) throw boom.notFound("Id: " + thingId + " Not found");
     let currentThing = this.things[thingIndex];
 
     currentThing = {
@@ -45,7 +46,7 @@ class Service {
 
   async remove(thingId) {
     const thingIndex = this.things.findIndex(thing => thing.id === thingId);
-    if (thingIndex === -1) throw new Error("Id: " + thingId + " Not found");
+    if (thingIndex === -1) throw boom.notFound("Id: " + thingId + " Not found");
 
     this.things.splice(thingIndex, 1);
     return thingId;
