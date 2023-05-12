@@ -4,40 +4,65 @@ const UsersService = require("../services/users.services");
 const router = express.Router();
 const userService = new UsersService();
 
-router.get("/", (req, res) => {
-  const users = userService.getAll();
-
-  res.status(200).json(users);
+router.get("/", async (req, res) => {
+  try {
+    const users = await userService.getAll();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).send({
+      status: "error",
+      message: error.message
+    });
+  }
 });
 
-router.get("/:userId", (req, res) => {
-  const { userId } = req.params;
-  const user = userService.getById(userId);
-
-  res.status(200).json(user);
+router.get("/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await userService.getById(userId);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).send({
+      status: "error",
+      message: error.message
+    });
+  }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { body } = req;
-  const newUser = userService.add(body);
+  const newUser = await userService.add(body);
 
   res.status(201).json(newUser);
 });
 
-router.patch("/:id", (req, res) => {
+router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  const updatedUser = userService.update(id, body);
-
-  res.status(200).json(updatedUser);
+  try {
+    const updatedUser = await userService.update(id, body);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(404).send({
+      status: "error",
+      message: error.message
+    });
+  }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  const idDeleted = userService.remove(id);
 
-  res.status(200).json(idDeleted);
+  try {
+    const idDeleted = await userService.remove(id);
+    res.status(200).json(idDeleted);
+  } catch (error) {
+    res.status(404).send({
+      status: "error",
+      message: error.message
+    });
+  }
 });
 
 module.exports = router;

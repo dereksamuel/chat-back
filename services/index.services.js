@@ -6,25 +6,35 @@ class Service {
   }
 
   getAll() {
-    return this.things;
+    return new Promise((res) => {
+      const timer = setTimeout(() => {
+        res(this.things);
+        clearTimeout(timer);
+      }, 2000);
+    });
   }
 
-  getById(thingId) {
-    return this.things.find(thing => thing.id === thingId);
+  async getById(thingId) {
+    const thing = this.things.find(thing => thing.id === thingId);
+    if (!thing) throw new Error("Id: " + thingId + " Not found");
+
+    return thing;
   }
 
-  update(thingId, thingData) {
-    const thingIndex = this.findIndex(thingId);
+  async update(thingId, thingData) {
+    const thingIndex = this.things.findIndex(thing => thing.id === thingId);
+    if (thingIndex === -1) throw new Error("Id: " + thingId + " Not found");
+    let currentThing = this.things[thingIndex];
 
-    this.things[thingIndex] = {
-      ...this.things[thingIndex],
+    currentThing = {
+      ...currentThing,
       ...thingData,
     };
 
-    return this.things[thingIndex];
+    return currentThing;
   }
 
-  add(thing) {
+  async add(thing) {
     const newThing = {
       id: faker.datatype.uuid(),
       ...thing
@@ -33,14 +43,9 @@ class Service {
     return newThing;
   }
 
-  findIndex(thingId) {
+  async remove(thingId) {
     const thingIndex = this.things.findIndex(thing => thing.id === thingId);
-    if (thingIndex === -1) throw new Error("Thing not found");
-    return thingIndex;
-  }
-
-  remove(thingId) {
-    const thingIndex = this.findIndex(thingId);
+    if (thingIndex === -1) throw new Error("Id: " + thingId + " Not found");
 
     this.things.splice(thingIndex, 1);
     return thingId;
