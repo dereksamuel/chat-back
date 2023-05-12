@@ -25,14 +25,13 @@ class Service {
   async update(thingId, thingData) {
     const thingIndex = this.things.findIndex(thing => thing.id === thingId);
     if (thingIndex === -1) throw boom.notFound("Id: " + thingId + " Not found");
-    let currentThing = this.things[thingIndex];
 
-    currentThing = {
-      ...currentThing,
+    this.things[thingIndex] = {
+      ...this.things[thingIndex],
       ...thingData,
     };
 
-    return currentThing;
+    return this.things[thingIndex];
   }
 
   async add(thing) {

@@ -1,5 +1,7 @@
 const express = require("express");
 const MessagesService = require("../services/messages.services");
+const validatorHandler = require("../middlewares/validator.handler");
+const { getMessageSchema, createMessageSchema, updateMessageSchema } = require("../schemas/message.schema.js");
 
 const router = express.Router();
 const messagesService = new MessagesService();
@@ -13,45 +15,54 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:messageId", async (req, res, next) => {
-  const { messageId } = req.params;
+router.get("/:messageId",
+  validatorHandler(getMessageSchema, "params"),
+  async (req, res, next) => {
+    const { messageId } = req.params;
 
-  try {
-    const message = await messagesService.getById(messageId);
-    res.status(200).json(message);
-  } catch (error) {
-    next(error);
-  }
-});
+    try {
+      const message = await messagesService.getById(messageId);
+      res.status(200).json(message);
+    } catch (error) {
+      next(error);
+    }
+  });
 
-router.post("/", async (req, res) => {
-  const { body } = req;
-  const newMessage = await messagesService.add(body);
+router.post("/",
+  validatorHandler(createMessageSchema, "params"),
+  async (req, res) => {
+    const { body } = req;
+    const newMessage = await messagesService.add(body);
 
-  res.status(201).json(newMessage);
-});
+    res.status(201).json(newMessage);
+  });
 
-router.patch("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const { body } = req;
+router.patch("/:messageId",
+  validatorHandler(getMessageSchema, "params"),
+  validatorHandler(updateMessageSchema, "body"),
+  async (req, res, next) => {
+    const { messageId } = req.params;
+    const { body } = req;
 
-  try {
-    const updatedMessage = await messagesService.update(id, body);
-    res.status(200).json(updatedMessage);
-  } catch (error) {
-    next(error);
-  }
-});
+    try {
+      const updatedMessage = await messagesService.update(messageId, body);
+      res.status(200).json(updatedMessage);
+    } catch (error) {
+      next(error);
+    }
+  });
 
-router.delete("/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.delete("/:messageId",
+  validatorHandler(getMessageSchema, "params"),
+  async (req, res, next) => {
+    const { messageId } = req.params;
 
-  try {
-    const deletedId = await messagesService.remove(id);
-    res.status(200).json(deletedId);
-  } catch (error) {
-    next(error);
-  }
-});
+    try {
+      const deletedId = await messagesService.remove(messageId);
+      res.status(200).json(deletedId);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 module.exports = router;
