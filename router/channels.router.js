@@ -5,7 +5,7 @@ const router = express.Router();
 const channelsService = new ChannelsService();
 
 router.get("/", (req, res) => {
-  const channels = channelsService.getAllChannels();
+  const channels = channelsService.getAll();
 
   res.status(200).json(channels);
 });
@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.get("/:channelId", (req, res) => {
   const { channelId } = req.params;
-  const channel = channelsService.getChannelById(channelId);
+  const channel = channelsService.getById(channelId);
 
   res.status(200).json(channel);
 });
@@ -21,7 +21,7 @@ router.get("/:channelId", (req, res) => {
 router.post("/", (req, res) => {
   const { body } = req;
 
-  channelsService.addChannel(body);
+  channelsService.add(body);
 
   res.status(201).json({
     message: "Channel created",
@@ -33,7 +33,7 @@ router.patch("/:id", (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  channelsService.updateChannel(id, body);
+  channelsService.update(id, body);
 
   res.status(200).json({
     message: "Channel updated partially",
@@ -45,7 +45,7 @@ router.patch("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  channelsService.removeChannel(id);
+  channelsService.remove(id);
 
   res.status(200).json({
     message: "Channel deleted",

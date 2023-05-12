@@ -5,21 +5,21 @@ const router = express.Router();
 const userService = new UsersService();
 
 router.get("/", (req, res) => {
-  const users = userService.getAllUsers();
+  const users = userService.getAll();
 
   res.status(200).json(users);
 });
 
 router.get("/:userId", (req, res) => {
   const { userId } = req.params;
-  const user = userService.getUserById(userId);
+  const user = userService.getById(userId);
 
   res.status(200).json(user);
 });
 
 router.post("/", (req, res) => {
   const { body } = req;
-  userService.addUser(body);
+  userService.add(body);
 
   res.status(201).json({
     message: "User created",
@@ -31,7 +31,7 @@ router.patch("/:id", (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  userService.updateUser(id, body);
+  userService.update(id, body);
 
   res.status(200).json({
     message: "User updated partially",
@@ -43,7 +43,7 @@ router.patch("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  userService.removeUser(id);
+  userService.remove(id);
 
   res.status(200).json({
     message: "User deleted",

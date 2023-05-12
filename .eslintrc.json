@@ -5,6 +5,9 @@
     "node": true,
     "jest": true
   },
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
   "rules": {
     "indent": ["error", 2],
     "semi": ["error", "always"],

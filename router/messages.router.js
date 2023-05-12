@@ -5,14 +5,14 @@ const router = express.Router();
 const messagesService = new MessagesService();
 
 router.get("/", (req, res) => {
-  const messages = messagesService.getAllMessages();
+  const messages = messagesService.getAll();
 
   res.status(200).json(messages);
 });
 
 router.get("/:messageId", (req, res) => {
   const { messageId } = req.params;
-  const message = messagesService.getMessageById(messageId);
+  const message = messagesService.getById(messageId);
 
   res.status(200).json(message);
 });
@@ -20,7 +20,7 @@ router.get("/:messageId", (req, res) => {
 router.post("/", (req, res) => {
   const { body } = req;
 
-  messagesService.addMessage(body);
+  messagesService.add(body);
 
   res.status(201).json({
     message: "Message created",
@@ -32,7 +32,7 @@ router.patch("/:id", (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  messagesService.updateMessage(id, body);
+  messagesService.update(id, body);
 
   res.status(200).json({
     message: "Message updated partially",
@@ -44,7 +44,7 @@ router.patch("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  messagesService.removeMessage(id);
+  messagesService.remove(id);
 
   res.status(200).json({
     message: "Message deleted",
