@@ -20,6 +20,8 @@ class Service {
       ...this.things[thingIndex],
       ...thingData,
     };
+
+    return this.things[thingIndex];
   }
 
   add(thing) {
@@ -28,6 +30,7 @@ class Service {
       ...thing
     };
     this.things.push(newThing);
+    return newThing;
   }
 
   findIndex(thingId) {
@@ -40,6 +43,7 @@ class Service {
     const thingIndex = this.findIndex(thingId);
 
     this.things.splice(thingIndex, 1);
+    return thingId;
   }
 }
 

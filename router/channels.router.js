@@ -20,37 +20,25 @@ router.get("/:channelId", (req, res) => {
 
 router.post("/", (req, res) => {
   const { body } = req;
+  const newChannel = channelsService.add(body);
 
-  channelsService.add(body);
-
-  res.status(201).json({
-    message: "Channel created",
-    channel: body,
-  });
+  res.status(201).json(newChannel);
 });
 
 router.patch("/:id", (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  channelsService.update(id, body);
+  const updatedChannel = channelsService.update(id, body);
 
-  res.status(200).json({
-    message: "Channel updated partially",
-    channel: body,
-    id
-  });
+  res.status(200).json(updatedChannel);
 });
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
+  const idDeleted = channelsService.remove(id);
 
-  channelsService.remove(id);
-
-  res.status(200).json({
-    message: "Channel deleted",
-    id
-  });
+  res.status(200).json(idDeleted);
 });
 
 module.exports = router;
