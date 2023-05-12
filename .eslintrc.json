@@ -1,14 +1,14 @@
 {
-	"extends": ["eslint:recommended", "prettier"],
-	"env": {
-		"es6": true,
-		"node": true,
-		"jest": true
-	},
-	"rules": {
-		"indent": ["error", 2],
-		"semi": ["error", "always"],
-		"quotes": ["error", "double"],
-		"no-console": "warn"
-	}
+  "extends": ["eslint:recommended", "prettier"],
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "no-console": "warn"
+  }
 }

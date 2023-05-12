@@ -1,44 +1,53 @@
 const express = require("express");
-const { faker } = require("@faker-js/faker");
+const UsersService = require("../services/users.services");
 
 const router = express.Router();
+const userService = new UsersService();
 
 router.get("/", (req, res) => {
-  const users = [];
-
-  for (let index = 0; index < 10; index++) {
-    users.push({
-      id: faker.datatype.uuid(),
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      phone: faker.phone.number(),
-      password: faker.internet.password(),
-      bio: faker.person.bio(),
-    });
-  }
+  const users = userService.getAllUsers();
 
   res.status(200).json(users);
 });
 
 router.get("/:userId", (req, res) => {
   const { userId } = req.params;
+  const user = userService.getUserById(userId);
 
-  res.status(200).json({
-    id: userId,
-    name: "Derek",
-    email: "11dereksamuel@gmail.com",
-    phone: "3154494547",
-    password: "1234",
-    bio: "I am a full stack developer",
-  });
+  res.status(200).json(user);
 });
 
 router.post("/", (req, res) => {
   const { body } = req;
+  userService.addUser(body);
 
   res.status(201).json({
     message: "User created",
     user: body,
+  });
+});
+
+router.patch("/:id", (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+
+  userService.updateUser(id, body);
+
+  res.status(200).json({
+    message: "User updated partially",
+    user: body,
+    id
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  userService.removeUser(id);
+
+  res.status(200).json({
+    message: "User deleted",
+    id
   });
 });
 
