@@ -1,18 +1,26 @@
 const { faker } = require("@faker-js/faker");
 const boom = require("@hapi/boom");
+const pool = require("../libs/postgres.pool");
+
+// const getConnection = require("../libs/postgres");
 
 class Service {
-  constructor(data) {
+  constructor(data, label) {
     this.things = data;
+    this.label = label;
+
+    this.pool = pool;
+    this.pool.on("error", (err) => boom.badImplementation(err));
   }
 
-  getAll() {
-    return new Promise((res) => {
-      const timer = setTimeout(() => {
-        res(this.things);
-        clearTimeout(timer);
-      }, 2000);
-    });
+  async getAll() {
+    // const client = await getConnection();
+    // const response = await client.query("SELECT * FROM users");
+
+    // return response?.rows;
+    const query = "SELECT * FROM users";
+    const things = await this.pool.query(query);
+    return things.rows;
   }
 
   async getById(thingId) {
