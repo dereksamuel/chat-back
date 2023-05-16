@@ -13,7 +13,7 @@ class ChannelsService extends Service {
       });
     }
 
-    super(channels, "channels");
+    super(channels, "Channel");
   }
 }
 

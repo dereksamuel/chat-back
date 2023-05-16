@@ -13,7 +13,7 @@ class MessagesService extends Service {
       });
     }
 
-    super(messages, "messages");
+    super(messages, "Message");
   }
 }
 

@@ -17,7 +17,7 @@ class UsersService extends Service {
       });
     }
 
-    super(users, "users");
+    super(users, "User");
   }
 }
 

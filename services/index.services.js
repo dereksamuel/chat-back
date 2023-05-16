@@ -1,62 +1,45 @@
-const { faker } = require("@faker-js/faker");
 const boom = require("@hapi/boom");
-const pool = require("../libs/postgres.pool");
-
-// const getConnection = require("../libs/postgres");
+const { models } = require("../libs/sequelize");
+const { v4: uuidv4 } = require("uuid");
 
 class Service {
   constructor(data, label) {
     this.things = data;
     this.label = label;
-
-    this.pool = pool;
-    this.pool.on("error", (err) => boom.badImplementation(err));
   }
 
   async getAll() {
-    // const client = await getConnection();
-    // const response = await client.query("SELECT * FROM users");
-
-    // return response?.rows;
-    const query = "SELECT * FROM users";
-    const things = await this.pool.query(query);
-    return things.rows;
+    const data = await models[this.label].findAll();
+    return data;
   }
 
   async getById(thingId) {
-    const thing = this.things.find(thing => thing.id === thingId);
+    const thing = await models[this.label].findByPk(thingId);
     if (!thing) throw boom.notFound("Id: " + thingId + " Not found");
 
     return thing;
   }
 
   async update(thingId, thingData) {
-    const thingIndex = this.things.findIndex(thing => thing.id === thingId);
-    if (thingIndex === -1) throw boom.notFound("Id: " + thingId + " Not found");
+    const thing = await this.getById(thingId);
+    await thing.update(thingData);
 
-    this.things[thingIndex] = {
-      ...this.things[thingIndex],
-      ...thingData,
-    };
-
-    return this.things[thingIndex];
+    return thing;
   }
 
   async add(thing) {
-    const newThing = {
-      id: faker.datatype.uuid(),
-      ...thing
-    };
-    this.things.push(newThing);
+    const newThing = await models[this.label].create({
+      ...thing,
+      id: uuidv4()
+    });
     return newThing;
   }
 
   async remove(thingId) {
-    const thingIndex = this.things.findIndex(thing => thing.id === thingId);
-    if (thingIndex === -1) throw boom.notFound("Id: " + thingId + " Not found");
+    const thing = await this.getById(thingId);
+    await thing.destroy();
 
-    this.things.splice(thingIndex, 1);
-    return thingId;
+    return thing;
   }
 }
 
