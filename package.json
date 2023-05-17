@@ -6,10 +6,14 @@
   "scripts": {
     "dev": "node --watch index.js",
     "start": "node index.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:rollback": "sequelize-cli db:migrate:undo",
+    "migrations:delete:everything:all": "sequelize-cli db:migrate:undo:all"
   },
   "keywords": [],
-  "author": "",
+  "author": "Derek Paul",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.40.0",

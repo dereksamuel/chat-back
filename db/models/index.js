@@ -1,4 +1,4 @@
-const { Channel, ChannelSchema } = require("./channels.model");
+const { Channel, ChannelSchema } = require("./channel.model");
 const { User, UserSchema } = require("./user.model");
 
 function setupModels(sequelizeConnection) {

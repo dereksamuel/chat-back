@@ -11,6 +11,4 @@ const sequelizeConnection = new Sequelize(URI, {
 
 setupModels(sequelizeConnection);
 
-sequelizeConnection.sync(); // CREATE TABLES WITH SCHEMAS THAT I had passed before
-
 module.exports = sequelizeConnection;
