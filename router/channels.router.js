@@ -1,10 +1,10 @@
 const express = require("express");
-const ChannelsService = require("../services/channels.services");
+const Service = require("../services/index.services");
 const validatorHandler = require("../middlewares/validator.handler");
 const { getChannelSchema, createChannelSchema, updateChannelSchema } = require("../schemas/channel.schema.js");
 
 const router = express.Router();
-const channelsService = new ChannelsService();
+const channelsService = new Service("Channel");
 
 router.get("/", async (req, res, next) => {
   try {

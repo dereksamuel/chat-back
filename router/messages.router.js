@@ -1,10 +1,10 @@
 const express = require("express");
-const MessagesService = require("../services/messages.services");
+const Service = require("../services/index.services");
 const validatorHandler = require("../middlewares/validator.handler");
 const { getMessageSchema, createMessageSchema, updateMessageSchema } = require("../schemas/message.schema.js");
 
 const router = express.Router();
-const messagesService = new MessagesService();
+const messagesService = new Service("Message");
 
 router.get("/", async (req, res, next) => {
   try {

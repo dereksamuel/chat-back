@@ -3,8 +3,7 @@ const { models } = require("../libs/sequelize");
 const crypto = require("crypto");
 
 class Service {
-  constructor(data, label) {
-    this.things = data;
+  constructor(label) {
     this.label = label;
   }
 
