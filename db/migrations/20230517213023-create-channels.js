@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const { UserSchema, USER_TABLE_NAME } = require("../models/user.model");
 const { CHANNEL_TABLE_NAME, ChannelSchema } = require("../models/channel.model.js");
