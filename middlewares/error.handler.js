@@ -1,4 +1,7 @@
+const { ValidationError } = require("sequelize");
+
 function logErrors (error, req, res, next) {
+  // eslint-disable-next-line no-console
   console.error("[ERROR]:", error);
   next(error);
 }
@@ -20,8 +23,21 @@ function errorHandler (error, req, res, next) {
   });
 }
 
+function ormErrorHandler (error, req, res, next) {
+  if (error instanceof ValidationError) {
+    res.status(409).json({
+      statusCode: 409,
+      message: error.message,
+      errors: error.errors
+    });
+  }
+
+  next(error);
+}
+
 module.exports = {
   logErrors,
   errorHandler,
-  boomErrorHandler
+  boomErrorHandler,
+  ormErrorHandler
 };
