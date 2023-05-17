@@ -30,11 +30,15 @@ router.get("/:messageId",
 
 router.post("/",
   validatorHandler(createMessageSchema, "params"),
-  async (req, res) => {
+  async (req, res, next) => {
     const { body } = req;
-    const newMessage = await messagesService.add(body);
+    try {
+      const newMessage = await messagesService.add(body);
 
-    res.status(201).json(newMessage);
+      res.status(201).json(newMessage);
+    } catch (error) {
+      next(error);
+    }
   });
 
 router.patch("/:messageId",

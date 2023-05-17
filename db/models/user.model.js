@@ -6,7 +6,7 @@ const UserSchema = {
   userId: {
     primaryKey: true,
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV1,
+    defaultValue: DataTypes.UUID,
     field: "user_id"
   },
   name: {

@@ -15,7 +15,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-
 router.get("/:channelId",
   validatorHandler(getChannelSchema, "params"),
   async (req, res, next) => {
@@ -31,11 +30,15 @@ router.get("/:channelId",
 
 router.post("/",
   validatorHandler(createChannelSchema, "body"),
-  async (req, res) => {
+  async (req, res, next) => {
     const { body } = req;
-    const newChannel = await channelsService.add(body);
+    try {
+      const newChannel = await channelsService.add(body);
 
-    res.status(201).json(newChannel);
+      res.status(201).json(newChannel);
+    } catch (error) {
+      next(error);
+    }
   });
 
 router.patch("/:channelId",

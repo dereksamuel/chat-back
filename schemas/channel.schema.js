@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const id = Joi.string().guid({
+const channelId = Joi.string().guid({
   version: [
     "uuidv4",
     "uuidv5"
@@ -20,7 +20,7 @@ const updateChannelSchema = Joi.object({
 });
 
 const getChannelSchema = Joi.object({
-  channelId: id.required(),
+  channelId: channelId.required(),
 });
 
 module.exports = {

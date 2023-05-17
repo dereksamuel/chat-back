@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const id = Joi.string().guid({
+const userId = Joi.string().guid({
   version: [
     "uuidv4",
     "uuidv5"
@@ -29,7 +29,7 @@ const updateUserSchema = Joi.object({
 });
 
 const getUserSchema = Joi.object({
-  userId: id.required(),
+  userId: userId.required(),
 });
 
 module.exports = {

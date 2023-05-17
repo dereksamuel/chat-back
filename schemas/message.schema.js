@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const id = Joi.string().guid({
+const messageId = Joi.string().guid({
   version: [
     "uuidv4",
     "uuidv5"
@@ -10,7 +10,7 @@ const content = Joi.string().min(3).max(200);
 
 const createMessageSchema = Joi.object({
   content: content.required(),
-  channelsUsersId: id.required(),
+  channelsUsersId: messageId.required(),
 });
 
 const updateMessageSchema = Joi.object({
@@ -18,7 +18,7 @@ const updateMessageSchema = Joi.object({
 });
 
 const getMessageSchema = Joi.object({
-  messageId: id.required(),
+  messageId: messageId.required(),
 });
 
 module.exports = {

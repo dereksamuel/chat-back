@@ -1,6 +1,6 @@
 const boom = require("@hapi/boom");
 const { models } = require("../libs/sequelize");
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 
 class Service {
   constructor(data, label) {
@@ -30,7 +30,7 @@ class Service {
   async add(thing) {
     const newThing = await models[this.label].create({
       ...thing,
-      id: uuidv4()
+      [`${this.label.toLowerCase()}Id`]: crypto.randomUUID()
     });
     return newThing;
   }

@@ -29,11 +29,15 @@ router.get("/:userId",
 
 router.post("/",
   validatorHandler(createUserSchema, "body"),
-  async (req, res) => {
+  async (req, res, next) => {
     const { body } = req;
-    const newUser = await userService.add(body);
+    try {
+      const newUser = await userService.add(body);
 
-    res.status(201).json(newUser);
+      res.status(201).json(newUser);
+    } catch (error) {
+      next(error);
+    }
   });
 
 router.patch("/:userId",

@@ -6,7 +6,7 @@ const ChannelSchema = {
   channelId: {
     primaryKey: true,
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV1,
+    defaultValue: DataTypes.UUID,
     field: "channel_id"
   },
   name: {
