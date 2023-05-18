@@ -14,7 +14,8 @@ const createMessageSchema = Joi.object({
 });
 
 const updateMessageSchema = Joi.object({
-  content: content.required()
+  content,
+  channelsUsersId: messageId
 });
 
 const getMessageSchema = Joi.object({

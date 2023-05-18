@@ -11,4 +11,3 @@ module.exports = {
     await queryInterface.dropTable(CHANNELS_USER_TABLE_NAME);
   }
 };
-
