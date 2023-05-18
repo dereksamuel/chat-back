@@ -4,30 +4,31 @@ const MESSAGE_TABLE_NAME = "messages";
 
 const MessageSchema = {
   messageId: {
+    field: "message_id",
     primaryKey: true,
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUID,
-    field: "message_id"
+    unique: true
   },
   content: {
     allowNull: false,
     type: DataTypes.STRING
   },
   channelsUserId: {
+    field: "channels_user_id",
     allowNull: true,
-    type: DataTypes.STRING,
-    field: "channels_user_id"
+    type: DataTypes.STRING
   },
   createdAt: {
+    field: "created_at",
     allowNull: false,
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-    field: "created_at"
+    defaultValue: Sequelize.NOW
   }
 };
 
 class Message extends Model {
-  static associations() {
+  static associate() {
     // models
   }
 

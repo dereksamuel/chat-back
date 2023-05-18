@@ -4,10 +4,11 @@ const USER_TABLE_NAME = "users";
 
 const UserSchema = {
   userId: {
+    field: "user_id",
     primaryKey: true,
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUID,
-    field: "user_id"
+    unique: true
   },
   name: {
     allowNull: false,
@@ -45,8 +46,13 @@ const UserSchema = {
 };
 
 class User extends Model {
-  static associations() {
-    // models
+  static associate(models) {
+    this.hasMany(models.ChannelsUser, {
+      as: "channels_user",
+      foreignKey: {
+        name: "userId"
+      }
+    });
   }
 
   static config(sequelizeConnection) {

@@ -8,7 +8,9 @@ class Service {
   }
 
   async getAll() {
-    const data = await models[this.label].findAll();
+    const data = await models[this.label].findAll({
+      include: ["channel", "user"]
+    });
     return data;
   }
 

@@ -4,10 +4,11 @@ const CHANNEL_TABLE_NAME = "channels";
 
 const ChannelSchema = {
   channelId: {
+    field: "channel_id",
     primaryKey: true,
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUID,
-    field: "channel_id"
+    unique: true
   },
   name: {
     allowNull: false,
@@ -15,19 +16,24 @@ const ChannelSchema = {
   },
   description: {
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING
   },
   createdAt: {
+    field: "created_at",
     allowNull: false,
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-    field: "created_at"
+    defaultValue: Sequelize.NOW
   }
 };
 
 class Channel extends Model {
-  static associations() {
-    // models
+  static associate(models) {
+    this.hasMany(models.ChannelsUser, {
+      as: "channels_user",
+      foreignKey: {
+        name: "channelId"
+      }
+    });
   }
 
   static config(sequelizeConnection) {
