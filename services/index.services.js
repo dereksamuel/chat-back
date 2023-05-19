@@ -20,7 +20,6 @@ class Service {
   }
 
   async getById(thingId) {
-    console.log(this.include, "ADSDADSSD");
     const thing = await models[this.label].findByPk(thingId, { include: this.include });
     if (!thing) throw boom.notFound("Id: " + thingId + " Not found");
 
