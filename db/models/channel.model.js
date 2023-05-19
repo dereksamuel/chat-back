@@ -3,33 +3,38 @@ const { Model, DataTypes, Sequelize } = require("sequelize");
 const CHANNEL_TABLE_NAME = "channels";
 
 const ChannelSchema = {
-  channelId: {
-    field: "channel_id",
+  id: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
-    unique: true
+    type: DataTypes.INTEGER
   },
   name: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
   description: {
     allowNull: true,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
   createdAt: {
     field: "created_at",
     allowNull: false,
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW
-  }
+    defaultValue: Sequelize.NOW,
+  },
 };
 
 class Channel extends Model {
   static associate(models) {
+    // this.belongsTo(models.ChannelsUser, {
+    //   as: "channels_users_channel",
+    //   foreignKey: {
+    //     name: "channelId",
+    //   },
+    // });
     this.hasMany(models.ChannelsUser, {
-      as: "channels_user",
+      as: "channels_users",
       foreignKey: {
         name: "channelId"
       }
@@ -41,7 +46,7 @@ class Channel extends Model {
       sequelize: sequelizeConnection,
       tableName: CHANNEL_TABLE_NAME,
       modelName: "Channel",
-      timestamps: false
+      timestamps: false,
     };
   }
 }
@@ -49,5 +54,5 @@ class Channel extends Model {
 module.exports = {
   CHANNEL_TABLE_NAME,
   ChannelSchema,
-  Channel
+  Channel,
 };

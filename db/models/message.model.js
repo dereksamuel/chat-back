@@ -3,12 +3,11 @@ const { Model, DataTypes, Sequelize } = require("sequelize");
 const MESSAGE_TABLE_NAME = "messages";
 
 const MessageSchema = {
-  messageId: {
-    field: "message_id",
+  id: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
-    unique: true
+    type: DataTypes.INTEGER
   },
   content: {
     allowNull: false,
@@ -16,8 +15,8 @@ const MessageSchema = {
   },
   channelsUserId: {
     field: "channels_user_id",
-    allowNull: true,
-    type: DataTypes.STRING
+    allowNull: false,
+    type: DataTypes.INTEGER
   },
   createdAt: {
     field: "created_at",

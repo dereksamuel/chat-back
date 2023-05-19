@@ -3,25 +3,24 @@ const { Model, DataTypes, Sequelize } = require("sequelize");
 const USER_TABLE_NAME = "users";
 
 const UserSchema = {
-  userId: {
-    field: "user_id",
+  id: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
-    unique: true
+    type: DataTypes.INTEGER
   },
   name: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
   password: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
   email: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true
+    unique: true,
   },
   bio: {
     allowNull: true,
@@ -30,25 +29,31 @@ const UserSchema = {
   phone: {
     allowNull: true,
     type: DataTypes.STRING,
-    unique: true
+    unique: true,
   },
   role: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: "mortal"
+    defaultValue: "mortal",
   },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW,
-    field: "created_at"
-  }
+    field: "created_at",
+  },
 };
 
 class User extends Model {
   static associate(models) {
+    // this.belongsTo(models.ChannelsUser, {
+    //   as: "channels_users_user",
+    //   foreignKey: {
+    //     name: "userId",
+    //   },
+    // });
     this.hasMany(models.ChannelsUser, {
-      as: "channels_user",
+      as: "channels_users",
       foreignKey: {
         name: "userId"
       }
@@ -60,7 +65,7 @@ class User extends Model {
       sequelize: sequelizeConnection,
       tableName: USER_TABLE_NAME,
       modelName: "User",
-      timestamps: false
+      timestamps: false,
     };
   }
 }
@@ -68,5 +73,5 @@ class User extends Model {
 module.exports = {
   USER_TABLE_NAME,
   UserSchema,
-  User
+  User,
 };

@@ -5,35 +5,33 @@ const { CHANNEL_TABLE_NAME } = require("./channel.model");
 const CHANNELS_USER_TABLE_NAME = "channels_users";
 
 const ChannelsUserSchema = {
-  channelsUserId: {
-    field: "channels_user_id",
+  id: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID
+    type: DataTypes.INTEGER
   },
   channelId: {
     field: "channel_id",
-    allowNull: false,
     references: {
       model: CHANNEL_TABLE_NAME,
-      key: "channel_id"
+      key: "id"
     },
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID
+    allowNull: false,
+    type: DataTypes.INTEGER
   },
   userId: {
     field: "user_id",
-    allowNull: false,
     references: {
       model: USER_TABLE_NAME,
-      key: "user_id"
+      key: "id"
     },
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
+    allowNull: false,
+    type: DataTypes.INTEGER
   },
   createdAt: {
     allowNull: false,
@@ -45,12 +43,14 @@ const ChannelsUserSchema = {
 
 class ChannelsUser extends Model {
   static associate(models) {
-    this.belongsTo(models.Channel, {
-      as: "channel"
-    });
-    this.belongsTo(models.User, {
-      as: "user"
-    });
+    this.belongsTo(models.User, { as: "user" });
+    this.belongsTo(models.Channel, { as: "channel" });
+    // this.belongsTo(models.User, {
+    //   as: "users"
+    // });
+    // this.belongsTo(models.Channel, {
+    //   as: "channels"
+    // });
   }
 
   static config(sequelizeConnection) {

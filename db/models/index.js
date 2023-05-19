@@ -9,9 +9,9 @@ function setupModels(sequelizeConnection) {
   ChannelsUser.init(ChannelsUserSchema, ChannelsUser.config(sequelizeConnection));
   Message.init(MessageSchema, Message.config(sequelizeConnection));
 
-  ChannelsUser.associate(sequelizeConnection.models);
   User.associate(sequelizeConnection.models);
   Channel.associate(sequelizeConnection.models);
+  ChannelsUser.associate(sequelizeConnection.models);
 }
 
 module.exports = setupModels;

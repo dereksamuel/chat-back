@@ -8,9 +8,7 @@ class Service {
   }
 
   async getAll() {
-    const data = await models[this.label].findAll({
-      include: ["channel", "user"]
-    });
+    const data = await models[this.label].findAll();
     return data;
   }
 
@@ -31,7 +29,7 @@ class Service {
   async add(thing) {
     const newThing = await models[this.label].create({
       ...thing,
-      [`${this.label.toLowerCase()}Id`]: crypto.randomUUID()
+      [`${this.label.toLowerCase()}Id`]: crypto.randomUUID(),
     });
     return newThing;
   }
