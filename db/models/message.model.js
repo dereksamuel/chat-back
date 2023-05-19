@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+const { CHANNELS_USER_TABLE_NAME } = require("./channels_user.model");
 
 const MESSAGE_TABLE_NAME = "messages";
 
@@ -15,6 +16,12 @@ const MessageSchema = {
   },
   channelsUserId: {
     field: "channels_user_id",
+    references: {
+      model: CHANNELS_USER_TABLE_NAME,
+      key: "id"
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
     allowNull: false,
     type: DataTypes.INTEGER
   },
@@ -27,8 +34,8 @@ const MessageSchema = {
 };
 
 class Message extends Model {
-  static associate() {
-    // models
+  static associate(models) {
+    this.belongsTo(models.ChannelsUser, { as: "channels_user" });
   }
 
   static config(sequelizeConnection) {

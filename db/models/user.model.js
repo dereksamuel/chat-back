@@ -46,12 +46,6 @@ const UserSchema = {
 
 class User extends Model {
   static associate(models) {
-    // this.belongsTo(models.ChannelsUser, {
-    //   as: "channels_users_user",
-    //   foreignKey: {
-    //     name: "userId",
-    //   },
-    // });
     this.hasMany(models.ChannelsUser, {
       as: "channels_users",
       foreignKey: {

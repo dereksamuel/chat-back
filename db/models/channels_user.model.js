@@ -45,12 +45,13 @@ class ChannelsUser extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: "user" });
     this.belongsTo(models.Channel, { as: "channel" });
-    // this.belongsTo(models.User, {
-    //   as: "users"
-    // });
-    // this.belongsTo(models.Channel, {
-    //   as: "channels"
-    // });
+
+    this.hasMany(models.Message, {
+      as: "message",
+      foreignKey: {
+        name: "channelsUserId"
+      }
+    });
   }
 
   static config(sequelizeConnection) {

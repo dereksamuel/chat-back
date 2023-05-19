@@ -5,15 +5,23 @@ const crypto = require("crypto");
 class Service {
   constructor(label) {
     this.label = label;
+    this.include = null;
+
+    if (label === "ChannelsUser") {
+      this.include = ["channel", "user"];
+    }
   }
 
   async getAll() {
-    const data = await models[this.label].findAll();
+    const data = await models[this.label].findAll({
+      include: this.include
+    });
     return data;
   }
 
   async getById(thingId) {
-    const thing = await models[this.label].findByPk(thingId);
+    console.log(this.include, "ADSDADSSD");
+    const thing = await models[this.label].findByPk(thingId, { include: this.include });
     if (!thing) throw boom.notFound("Id: " + thingId + " Not found");
 
     return thing;

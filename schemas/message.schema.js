@@ -5,12 +5,12 @@ const content = Joi.string().min(3).max(200);
 
 const createMessageSchema = Joi.object({
   content: content.required(),
-  channelsUsersId: messageId.required(),
+  channelsUserId: messageId.required(),
 });
 
 const updateMessageSchema = Joi.object({
   content,
-  channelsUsersId: messageId
+  channelsUserId: messageId
 });
 
 const getMessageSchema = Joi.object({
