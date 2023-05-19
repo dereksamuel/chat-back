@@ -1,11 +1,6 @@
 const Joi = require("joi");
 
-const messageId = Joi.string().guid({
-  version: [
-    "uuidv4",
-    "uuidv5"
-  ]
-});
+const messageId = Joi.number().integer();
 const content = Joi.string().min(3).max(200);
 
 const createMessageSchema = Joi.object({

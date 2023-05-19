@@ -1,11 +1,6 @@
 const Joi = require("joi");
 
-const userId = Joi.string().guid({
-  version: [
-    "uuidv4",
-    "uuidv5"
-  ]
-});
+const userId = Joi.number().integer();
 const name = Joi.string().min(10).max(30);
 const bio = Joi.string().min(10).max(150);
 const phone = Joi.string().min(10).max(20);

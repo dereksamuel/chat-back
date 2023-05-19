@@ -1,11 +1,6 @@
 const Joi = require("joi");
 
-const channelsUserId = Joi.string().guid({
-  version: [
-    "uuidv4",
-    "uuidv5"
-  ]
-});
+const channelsUserId = Joi.number().integer();
 
 const createChannelsUserSchema = Joi.object({
   channelId: channelsUserId.required(),

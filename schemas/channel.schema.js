@@ -1,11 +1,6 @@
 const Joi = require("joi");
 
-const channelId = Joi.string().guid({
-  version: [
-    "uuidv4",
-    "uuidv5"
-  ]
-});
+const channelId = Joi.number().integer();
 const name = Joi.string().min(10).max(30);
 const description = Joi.string().min(10).max(150);
 
