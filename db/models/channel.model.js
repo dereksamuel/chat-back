@@ -27,12 +27,6 @@ const ChannelSchema = {
 
 class Channel extends Model {
   static associate(models) {
-    // this.belongsTo(models.ChannelsUser, {
-    //   as: "channels_users_channel",
-    //   foreignKey: {
-    //     name: "channelId",
-    //   },
-    // });
     this.hasMany(models.ChannelsUser, {
       as: "channels_users",
       foreignKey: {

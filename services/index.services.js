@@ -14,7 +14,8 @@ class Service {
 
   async getAll() {
     const data = await models[this.label].findAll({
-      include: this.include
+      include: this.include,
+      limit: 100
     });
     return data;
   }
