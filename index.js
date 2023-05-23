@@ -18,6 +18,8 @@ const options = {
   }
 };
 
+app.get("/", (req, res) => res.redirect("/api/v1/users"));
+
 app.use(express.json());
 app.use(cors(options));
 
