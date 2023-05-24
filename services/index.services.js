@@ -35,11 +35,14 @@ class Service {
   }
 
   async add(thing) {
-    const newThing = await models[this.label].create({
+    let newThing = {
       ...thing,
       [`${this.label.toLowerCase()}Id`]: crypto.randomUUID(),
-    });
-    return newThing;
+    };
+
+    const response = await models[this.label].create(newThing);
+
+    return response;
   }
 
   async remove(thingId) {

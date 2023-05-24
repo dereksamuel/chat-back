@@ -1,21 +1,29 @@
 const express = require("express");
+const passport = require("passport");
+
 const Service = require("../services/index.services");
 const validatorHandler = require("../middlewares/validator.handler");
 const { getChannelSchema, createChannelSchema, updateChannelSchema } = require("../schemas/channel.schema.js");
+const { checkRoles } = require("../middlewares/auth.handler");
 
 const router = express.Router();
 const channelsService = new Service("Channel");
 
-router.get("/", async (req, res, next) => {
-  try {
-    const channels = await channelsService.getAll();
-    res.status(200).json(channels);
-  } catch (error) {
-    next(error);
-  }
-});
+router.use(passport.authenticate("jwt", { session: false }));
+
+router.get("/",
+  checkRoles("master"),
+  async (req, res, next) => {
+    try {
+      const channels = await channelsService.getAll();
+      res.status(200).json(channels);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 router.get("/:channelId",
+  checkRoles("master"),
   validatorHandler(getChannelSchema, "params"),
   async (req, res, next) => {
     const { channelId } = req.params;
@@ -42,6 +50,7 @@ router.post("/",
   });
 
 router.patch("/:channelId",
+  checkRoles("master"),
   validatorHandler(getChannelSchema, "params"),
   validatorHandler(updateChannelSchema, "body"),
   async (req, res, next) => {
@@ -57,6 +66,7 @@ router.patch("/:channelId",
   });
 
 router.delete("/:channelId",
+  checkRoles("master"),
   validatorHandler(getChannelSchema, "params"),
   async (req, res, next) => {
     const { channelId } = req.params;

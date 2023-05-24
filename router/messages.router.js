@@ -2,9 +2,12 @@ const express = require("express");
 const Service = require("../services/index.services");
 const validatorHandler = require("../middlewares/validator.handler");
 const { getMessageSchema, createMessageSchema, updateMessageSchema } = require("../schemas/message.schema.js");
+const passport = require("passport");
 
 const router = express.Router();
 const messagesService = new Service("Message");
+
+router.use(passport.authenticate("jwt", { session: false }));
 
 router.get("/", async (req, res, next) => {
   try {

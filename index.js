@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const routerApi = require("./router");
 const { errorHandler, logErrors, boomErrorHandler, ormErrorHandler } = require("./middlewares/error.handler");
+const { verificationHandler } = require("./middlewares/auth.handler");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,12 @@ const options = {
   }
 };
 
+app.get("/new-route", verificationHandler, (req, res) => {
+  res.send("Hello world");
+});
+
+require("./utils/auth");
+
 app.get("/", (req, res) => res.redirect("/api/v1/users"));
 
 app.use(express.json());
@@ -31,4 +38,4 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(PORT);
-console.log(`Server listening on http://localhost:${PORT}`);
+console.log(`Server listening on http://localhost:${PORT}`, process.env.NODE_ENV);

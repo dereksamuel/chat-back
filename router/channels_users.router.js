@@ -1,4 +1,6 @@
 const express = require("express");
+const passport = require("passport");
+
 const Service = require("../services/index.services");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
@@ -9,6 +11,8 @@ const {
 
 const router = express.Router();
 const channelsUsersService = new Service("ChannelsUser");
+
+router.use(passport.authenticate("jwt", { session: false }));
 
 router.get("/", async (req, res, next) => {
   try {
