@@ -21,4 +21,8 @@ module.exports = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }
   },
+  mailConfig: {
+    senderEmail: process.env.SENDER_EMAIL,
+    senderPassword: process.env.SENDER_PASSWORD
+  }
 };

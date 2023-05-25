@@ -13,6 +13,7 @@ router.get(
     try {
       const user = await userService.getById(req.user.sub);
       delete user.dataValues.password;
+      delete user.dataValues.recoveryToken;
       res.status(200).json(user);
     } catch (error) {
       next(error);

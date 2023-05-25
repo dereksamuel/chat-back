@@ -1,8 +1,8 @@
 const { Strategy } = require("passport-github");
 const { authConfig } = require("../../../config/config");
 
-const User = require("../../../services/user.services");
-const service = new User();
+const Auth = require("../../../services/auth.services");
+const service = new Auth();
 const options = {
   clientID: authConfig.github.clientID,
   clientSecret: authConfig.github.clientSecret,
@@ -10,17 +10,7 @@ const options = {
 };
 
 const GitHubStrategy = new Strategy(options, async (accessToken, refreshToken, profile, cb) => {
-  let user = await service.getByEmail(profile._json.blog);
-
-  if (!user) {
-    user = await service.add({
-      name: profile.username,
-      password: "1234",
-      email: profile._json.blog,
-      bio: profile._json.bio,
-      role: "mortal"
-    });
-  }
+  const user = await service.upgradeUser(profile);
 
   return cb(null, {
     user,

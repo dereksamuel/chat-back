@@ -25,6 +25,7 @@ class User extends Service {
 
     const response = await models.User.create(newUser);
     delete response.dataValues?.password;
+    delete response.dataValues?.recoveryToken;
 
     return response;
   }
