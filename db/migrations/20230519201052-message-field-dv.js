@@ -14,8 +14,8 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable(CHANNELS_USER_TABLE_NAME);
     await queryInterface.dropTable(MESSAGE_TABLE_NAME);
+    await queryInterface.dropTable(CHANNELS_USER_TABLE_NAME);
     await queryInterface.dropTable(USER_TABLE_NAME);
     await queryInterface.dropTable(CHANNEL_TABLE_NAME);
   }
