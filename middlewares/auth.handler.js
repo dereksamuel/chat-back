@@ -1,15 +1,4 @@
 const boom = require("@hapi/boom");
-const { authConfig } = require("../config/config");
-
-function verificationHandler(req, res, next) {
-  const apiKey = req.headers["api"];
-
-  if (apiKey === authConfig.apiKey) {
-    next();
-  } else {
-    next(boom.unauthorized());
-  }
-}
 
 function checkRoles(...roles) {
   return (req, res, next) => {
@@ -22,6 +11,5 @@ function checkRoles(...roles) {
 }
 
 module.exports = {
-  verificationHandler,
   checkRoles
 };
